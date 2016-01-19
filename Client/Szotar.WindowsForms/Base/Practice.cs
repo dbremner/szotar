@@ -119,7 +119,7 @@ namespace Szotar.WindowsForms {
 	    readonly Stack<PracticeItem>
 	        fore = new Stack<PracticeItem>();
 
-	    public IPracticeWindow Source { get; private set; }
+	    public IPracticeWindow Source { get; }
 		public PracticeItem CurrentItem { get; private set; }
 		public void UpdateCurrentItem(PracticeItem newItem) {
 			Source.ReplaceItem(CurrentItem, newItem);

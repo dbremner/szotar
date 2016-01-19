@@ -54,7 +54,7 @@ namespace Szotar {
 		/// <remarks>This property is marked as not browsable because that is how the
 		/// DataGridView builds its column list (on Windows .NET, at least).</remarks>
 		[Browsable(false)]
-		public Entry Entry { get; private set; }
+		public Entry Entry { get; }
 	}
 
 	struct SearchQuery {

@@ -40,7 +40,7 @@ namespace Szotar.Sqlite {
 		bool raiseListEvents = true;
 		readonly UndoList<Command> undoList;
 
-		public SqliteDataStore DataStore { get; private set; }
+		public SqliteDataStore DataStore { get; }
 
 		public override long? ID {
 			get { return id; }

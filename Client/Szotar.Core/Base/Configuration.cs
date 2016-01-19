@@ -98,7 +98,7 @@ namespace Szotar {
             remove { }
         }
 
-        public SettingChangedWeakEventManager SettingChangedEventManager { get; private set; }
+        public SettingChangedWeakEventManager SettingChangedEventManager { get; }
     }
 
     public static class Configuration {
@@ -359,7 +359,7 @@ namespace Szotar {
         }
 
         public event EventHandler<SettingChangedEventArgs> SettingChanged;
-        public SettingChangedWeakEventManager SettingChangedEventManager { get; private set; }
+        public SettingChangedWeakEventManager SettingChangedEventManager { get; }
 
         protected void RaiseSettingChanged(string setting) {
             var handler = SettingChanged;

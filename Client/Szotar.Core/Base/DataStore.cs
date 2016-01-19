@@ -17,8 +17,8 @@ namespace Szotar {
 	public class DataStore : IDataStore {
 		static IDataStore userDataStore, programDataStore, combinedDataStore;
 
-		public string Path { get; private set; }
-		public bool Writable { get; private set; }
+		public string Path { get; }
+		public bool Writable { get; }
 
 		protected DataStore(string path, bool writable) {
 			Path = path;
@@ -132,8 +132,8 @@ namespace Szotar {
 			get { return User.Path; }
 		}
 
-		public IDataStore User { get; private set; }
-		public IDataStore Program { get; private set; }
+		public IDataStore User { get; }
+		public IDataStore Program { get; }
 
 		public CombinedDataStore(IDataStore user, IDataStore program) {
 			User = user;

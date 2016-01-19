@@ -23,7 +23,7 @@ using System.Linq;
 // Note: Mono 2.4 doesn't support shared rows. This is probably causing much of the performance loss.
 namespace Szotar.WindowsForms.Forms {
 	public partial class LookupForm : Form {
-		public IBilingualDictionary Dictionary { get; private set; }
+		public IBilingualDictionary Dictionary { get; }
 
 		SearchMode searchMode, displayedSearchMode;
 		IList<SearchResult> results;

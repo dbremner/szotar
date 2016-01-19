@@ -9,8 +9,8 @@ namespace Szotar.WindowsForms {
 	// It must be serializable to be placed onto the clipboard.
 	[Serializable]
 	public class WordListEntries : ISerializable {
-		public WordList WordList { get; private set; }
-		public IList<WordListEntry> Items { get; private set; }
+		public WordList WordList { get; }
+		public IList<WordListEntry> Items { get; }
 		int count;
 
 		public IEnumerable<int> Indices { 

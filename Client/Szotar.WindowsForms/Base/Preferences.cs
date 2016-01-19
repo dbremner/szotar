@@ -15,7 +15,7 @@ namespace Szotar.WindowsForms.Preferences {
 		}
 
 		public Type Parent { get; set; }
-		public string Name { get; private set; }
+		public string Name { get; }
 		public int Importance { get; set; }
 
 		public bool IsRoot {
