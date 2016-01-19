@@ -30,11 +30,11 @@ namespace Szotar.WindowsForms.Preferences {
 			setLanguage = false;
 
 			UpdateListFontButton();
-			listFontButton.Click += new EventHandler(listFontButton_Click);
+			listFontButton.Click += listFontButton_Click;
 
-			englishUS.Click += new EventHandler(LanguageChanged);
-			englishGB.Click += new EventHandler(LanguageChanged);
-			hungarian.Click += new EventHandler(LanguageChanged);
+			englishUS.Click += LanguageChanged;
+			englishGB.Click += LanguageChanged;
+			hungarian.Click += LanguageChanged;
 		}
 
 		void LanguageChanged(object sender, EventArgs e) {

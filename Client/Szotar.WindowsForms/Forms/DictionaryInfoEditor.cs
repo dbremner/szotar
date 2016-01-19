@@ -26,7 +26,7 @@ namespace Szotar.WindowsForms.Forms {
 			this.dict = dict;
 			this.saveOnClose = saveOnClose;
 
-			save.Click += new EventHandler(save_Click);
+			save.Click += save_Click;
 			cancel.Click += delegate { Close(); };
 
 			name.TextChanged += delegate { UpdateNames(); };

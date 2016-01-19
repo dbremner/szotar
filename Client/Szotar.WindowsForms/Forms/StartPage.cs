@@ -17,7 +17,7 @@ namespace Szotar.WindowsForms.Forms {
 
 			exitProgram.Text = string.Format(exitProgram.Text, Application.ProductName);
 
-			recentItems.ListsChosen += new EventHandler(recentItems_ListsChosen);
+			recentItems.ListsChosen += recentItems_ListsChosen;
 
 			tagMenu = new TagMenu();
 			listContextMenu.Items.Insert(listContextMenu.Items.IndexOf(newListCM), tagMenu);

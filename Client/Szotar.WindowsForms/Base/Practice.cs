@@ -217,11 +217,11 @@ namespace Szotar.WindowsForms {
 				GameArea.Controls.Add(l);
 			}
 
-			GameArea.Resize += new EventHandler(GameArea_Resize);
-			GameArea.PreviewKeyDown += new PreviewKeyDownEventHandler(GameArea_PreviewKeyDown);
+			GameArea.Resize += GameArea_Resize;
+			GameArea.PreviewKeyDown += GameArea_PreviewKeyDown;
 
 			foreach (Control c in new Control[] { phraseLabel, translationLabel, GameArea }) {
-				c.MouseUp += new MouseEventHandler(GameArea_MouseUp);
+				c.MouseUp += GameArea_MouseUp;
 			}
 
 			navMenu.Back += delegate { GoBack(); };
@@ -265,11 +265,11 @@ namespace Szotar.WindowsForms {
 		public override void Stop() {
 			base.Stop();
 
-			GameArea.Resize -= new EventHandler(GameArea_Resize);
-			GameArea.PreviewKeyDown -= new PreviewKeyDownEventHandler(GameArea_PreviewKeyDown);
+			GameArea.Resize -= GameArea_Resize;
+			GameArea.PreviewKeyDown -= GameArea_PreviewKeyDown;
 
 			foreach (Control c in new Control[] { phraseLabel, translationLabel, GameArea })
-				c.MouseUp -= new MouseEventHandler(GameArea_MouseUp);
+				c.MouseUp -= GameArea_MouseUp;
 		}
 
 		void GoForward() {

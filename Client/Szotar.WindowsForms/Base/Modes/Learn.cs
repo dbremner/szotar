@@ -20,11 +20,11 @@ namespace Szotar.WindowsForms {
 			fixParens = GuiConfiguration.PracticeFixParentheses;
 			fixCase = GuiConfiguration.PracticeFixCase;
 
-			Configuration.Default.SettingChanged += new EventHandler<SettingChangedEventArgs>(OnSettingChanged);
+			Configuration.Default.SettingChanged += OnSettingChanged;
 		}
 
 		public void RemoveEventHandlers() {
-			Configuration.Default.SettingChanged -= new EventHandler<SettingChangedEventArgs>(OnSettingChanged);
+			Configuration.Default.SettingChanged -= OnSettingChanged;
 		}
 
 		void OnSettingChanged(object sender, SettingChangedEventArgs e) {

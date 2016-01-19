@@ -16,8 +16,8 @@ namespace Szotar.WindowsForms.Forms {
 		public DictionaryImport() {
 			InitializeComponent();
 
-			select.SelectedIndexChanged += new EventHandler(select_SelectedIndexChanged);
-			this.Closed += new EventHandler(DictionaryImport_Closed);
+			select.SelectedIndexChanged += select_SelectedIndexChanged;
+			this.Closed += DictionaryImport_Closed;
 
 			select.BeginUpdate();
 
@@ -93,7 +93,7 @@ namespace Szotar.WindowsForms.Forms {
 					return;
 				}
 
-				newUI.Finished += new EventHandler(this.ImporterUIFinished);
+				newUI.Finished += this.ImporterUIFinished;
 				CurrentUI = (Control)newUI;
 			}
 		}
@@ -113,9 +113,9 @@ namespace Szotar.WindowsForms.Forms {
 			set {
 				if (content.Controls.Count > 0) {
 					if (content.Controls[0] is IImporterUI<IBilingualDictionary>)
-						((IImporterUI<IBilingualDictionary>)content.Controls[0]).Finished -= new EventHandler(this.ImporterUIFinished);
+						((IImporterUI<IBilingualDictionary>)content.Controls[0]).Finished -= this.ImporterUIFinished;
 					else if (content.Controls[0] is Controls.ProgressUI)
-						((Controls.ProgressUI)content.Controls[0]).Cancelled -= new EventHandler(progressUI_Cancelled);
+						((Controls.ProgressUI)content.Controls[0]).Cancelled -= progressUI_Cancelled;
 
 					if (content.Controls[0] is IDisposable)
 						((IDisposable)content.Controls[0]).Dispose();
@@ -124,7 +124,7 @@ namespace Szotar.WindowsForms.Forms {
 				content.Controls.Clear();
 				if (value is Controls.ProgressUI) {
 					value.Dock = DockStyle.Fill;
-					((Controls.ProgressUI)value).Cancelled += new EventHandler(progressUI_Cancelled);
+					((Controls.ProgressUI)value).Cancelled += progressUI_Cancelled;
 					content.Controls.Add(value);
 				} else if (value != null) {
 					value.Dock = DockStyle.Fill;
@@ -147,13 +147,13 @@ namespace Szotar.WindowsForms.Forms {
 
 		#region Events
 		private void WireImporterEvents() {
-			importer.Completed += new EventHandler<ImportCompletedEventArgs<IBilingualDictionary>>(importer_Completed);
-			importer.ProgressChanged += new EventHandler<ProgressMessageEventArgs>(importer_ProgressChanged);
+			importer.Completed += importer_Completed;
+			importer.ProgressChanged += importer_ProgressChanged;
 		}
 
 		private void UnwireImporterEvents() {
-			importer.Completed -= new EventHandler<ImportCompletedEventArgs<IBilingualDictionary>>(importer_Completed);
-			importer.ProgressChanged -= new EventHandler<ProgressMessageEventArgs>(importer_ProgressChanged);
+			importer.Completed -= importer_Completed;
+			importer.ProgressChanged -= importer_ProgressChanged;
 		}
 		#endregion
 
@@ -242,7 +242,7 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		void ImporterUIFinished(object sender, EventArgs e) {
-			((IImporterUI<IBilingualDictionary>)sender).Finished -= new EventHandler(this.ImporterUIFinished);
+			((IImporterUI<IBilingualDictionary>)sender).Finished -= this.ImporterUIFinished;
 
 			if (select.SelectedItem != null && select.SelectedItem is ImporterItem) {
 				if (CurrentUI is IImporterUI<IBilingualDictionary>)

@@ -290,12 +290,12 @@ namespace Szotar.WindowsForms.Controls {
 		#region Data Binding
 		private void WireDataSourceEvents() {
 			if (source is IBindingList)
-				((IBindingList)source).ListChanged += new ListChangedEventHandler(source_ListChanged);
+				((IBindingList)source).ListChanged += source_ListChanged;
 		}
 
 		private void UnwireDataSourceEvents() {
 			if (source is IBindingList)
-				((IBindingList)source).ListChanged -= new ListChangedEventHandler(source_ListChanged);
+				((IBindingList)source).ListChanged -= source_ListChanged;
 		}
 
 		void source_ListChanged(object sender, ListChangedEventArgs e) {
@@ -373,14 +373,14 @@ namespace Szotar.WindowsForms.Controls {
 
 		private void InitializeVirtualMode() {
 			grid.VirtualMode = true;
-			grid.CellValueNeeded += new DataGridViewCellValueEventHandler(grid_CellValueNeeded);
-			grid.CellValuePushed += new DataGridViewCellValueEventHandler(grid_CellValuePushed);
-			grid.NewRowNeeded += new DataGridViewRowEventHandler(grid_NewRowNeeded);
-			grid.RowValidated += new DataGridViewCellEventHandler(grid_RowValidated);
-			grid.RowDirtyStateNeeded += new QuestionEventHandler(grid_RowDirtyStateNeeded);
-			grid.CancelRowEdit += new QuestionEventHandler(grid_CancelRowEdit);
-			grid.UserDeletingRow += new DataGridViewRowCancelEventHandler(grid_UserDeletingRow);
-			grid.KeyUp += new KeyEventHandler(grid_KeyUp);
+			grid.CellValueNeeded += grid_CellValueNeeded;
+			grid.CellValuePushed += grid_CellValuePushed;
+			grid.NewRowNeeded += grid_NewRowNeeded;
+			grid.RowValidated += grid_RowValidated;
+			grid.RowDirtyStateNeeded += grid_RowDirtyStateNeeded;
+			grid.CancelRowEdit += grid_CancelRowEdit;
+			grid.UserDeletingRow += grid_UserDeletingRow;
+			grid.KeyUp += grid_KeyUp;
 
 			DataGridViewColumn phraseColumn = new DataGridViewTextBoxColumn();
 			phraseColumn.HeaderText = Properties.Resources.PhraseDefaultHeader;
@@ -732,10 +732,10 @@ namespace Szotar.WindowsForms.Controls {
 
 		void InitializeDragAndDrop() {
 			grid.AllowDrop = true;
-			grid.DragOver += new DragEventHandler(grid_DragOver);
-			grid.DragDrop += new DragEventHandler(grid_DragDrop);
-			grid.MouseMove += new MouseEventHandler(grid_MouseMove);
-			grid.DragLeave += new EventHandler(grid_DragLeave);
+			grid.DragOver += grid_DragOver;
+			grid.DragDrop += grid_DragDrop;
+			grid.MouseMove += grid_MouseMove;
+			grid.DragLeave += grid_DragLeave;
 		}
 
 		// Starts a drag operation if the mouse leaves the drag box with the button held down.
@@ -1051,7 +1051,7 @@ namespace Szotar.WindowsForms.Controls {
 
 		#region Appearance
 		private void InitializeGridStyles() {
-			grid.CellFormatting += new DataGridViewCellFormattingEventHandler(grid_CellFormatting);
+			grid.CellFormatting += grid_CellFormatting;
 			//grid.DataError += new DataGridViewDataErrorEventHandler(grid_DataError);
 
 			grid.Font = this.Font;

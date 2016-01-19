@@ -46,7 +46,7 @@ namespace Szotar.WindowsForms.Importing {
 
 			operation = AsyncOperationManager.CreateOperation(this);
 
-			Thread workerThread = new Thread(new ThreadStart(this.WorkerThread));
+			Thread workerThread = new Thread(this.WorkerThread);
 			workerThread.Start();
 		}
 
@@ -173,12 +173,12 @@ namespace Szotar.WindowsForms.Importing {
 		}
 
 		private void WireEvents(IDictionarySectionImporter importer) {
-			importer.ProgressChanged += new EventHandler<ProgressMessageEventArgs>(ImporterProgressChanged);
+			importer.ProgressChanged += ImporterProgressChanged;
 		}
 
 		private void UnwireEvents(IDictionarySectionImporter importer) {
 			if (importer != null) // Most likely because of Cancel()
-				importer.ProgressChanged -= new EventHandler<ProgressMessageEventArgs>(ImporterProgressChanged);
+				importer.ProgressChanged -= ImporterProgressChanged;
 		}
 		#endregion
 

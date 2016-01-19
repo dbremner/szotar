@@ -640,7 +640,7 @@ namespace Szotar {
 		public void Save() {
 			CancelBackgroundSave();
 
-			workerThread = new Thread(new ThreadStart(this.BackgroundSaveWorker));
+			workerThread = new Thread(this.BackgroundSaveWorker);
 			workerThread.Start();
 		}
 

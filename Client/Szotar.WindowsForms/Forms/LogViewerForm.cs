@@ -5,9 +5,9 @@ namespace Szotar.WindowsForms.Forms {
 		public LogViewerForm() {
 			InitializeComponent();
 
-			ProgramLog.Default.MessageAdded += new System.EventHandler<LogEventArgs>(LogMessageAdded);
+			ProgramLog.Default.MessageAdded += LogMessageAdded;
 			FormClosed += delegate {
-				ProgramLog.Default.MessageAdded -= new System.EventHandler<LogEventArgs>(LogMessageAdded);
+				ProgramLog.Default.MessageAdded -= LogMessageAdded;
 			};
 		}
 
