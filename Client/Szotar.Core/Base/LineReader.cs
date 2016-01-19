@@ -9,18 +9,18 @@ namespace Szotar {
 	/// It is a thus specialized version of StreamReader.
 	/// </summary>
 	public class Utf8LineReader : IDisposable {
-		bool disposeStream;
-		Stream stream;
-		Encoding encoding;
+	    readonly bool disposeStream;
+	    readonly Stream stream;
+	    readonly Encoding encoding;
 		bool eof;
 		long position;
 
 		// The default buffer size is quite big, I believe. It's probably best to keep 
 		// it around between ReadLine calls to avoid big allocations every time.
-		StringBuilder lineBuilder;
-		Decoder decoder;
+	    readonly StringBuilder lineBuilder;
+	    readonly Decoder decoder;
 
-		byte[] buffer;
+	    readonly byte[] buffer;
 		char[] decodedChars;
 		int bytesInBuffer;
 		int offset;

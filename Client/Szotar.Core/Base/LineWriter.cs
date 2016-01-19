@@ -4,12 +4,12 @@ using System;
 
 namespace Szotar {
 	public class LineWriter : IDisposable {
-		Encoder encoder;
+	    readonly Encoder encoder;
 
-		byte[] writeBuffer;
+	    readonly byte[] writeBuffer;
 		int writeBufferOffset;
 
-		Stream stream;
+	    readonly Stream stream;
 		long streamPosition;
 
 		public LineWriter(Stream stream)

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 // TODO: Hide stack trace by default, store visibility in GuiConfiguration.
 namespace Szotar.WindowsForms.Controls {
 	public partial class ErrorUI : UserControl {
-		Bitmap errorBitmap;
+	    readonly Bitmap errorBitmap;
 
 		public ErrorUI(string error, string stack) {
 			InitializeComponent();

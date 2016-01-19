@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Szotar.WindowsForms.Dialogs {
 	public partial class EditDictionaryItem : Form {
-		IDictionarySection dictionary;
+	    readonly IDictionarySection dictionary;
 		Entry entry;
 
 		public EditDictionaryItem(IDictionarySection dictionary, string phraseLanguage, string translationLanguage, Entry entry = null) {

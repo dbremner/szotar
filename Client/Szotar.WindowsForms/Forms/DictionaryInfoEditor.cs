@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace Szotar.WindowsForms.Forms {
 	public partial class DictionaryInfoEditor : Form {
-		IBilingualDictionary dict;
-		bool saveOnClose;
-		string initialTitle;
+	    readonly IBilingualDictionary dict;
+	    readonly bool saveOnClose;
+	    readonly string initialTitle;
 
 		public DictionaryInfoEditor(IBilingualDictionary dict, bool saveOnClose) {
 			InitializeComponent();

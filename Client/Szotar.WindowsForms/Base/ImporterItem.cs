@@ -2,8 +2,9 @@
 
 namespace Szotar.WindowsForms {
 	public class ImporterItem {
-		private string name, description;
-		private Type type;
+		private readonly string name;
+	    private readonly string description;
+	    private readonly Type type;
 
 		public ImporterItem(Type type, string name, string description) {
 			this.type = type;

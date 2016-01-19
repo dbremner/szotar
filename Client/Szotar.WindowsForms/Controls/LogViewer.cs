@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace Szotar.WindowsForms.Controls {
 	public partial class LogViewer : UserControl {
 		bool showMetrics, showDebug, showWarnings, showErrors;
-		ProgramLog log;
+	    readonly ProgramLog log;
 
 		public LogViewer() {
 			InitializeComponent();

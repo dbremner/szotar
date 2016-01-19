@@ -489,7 +489,7 @@ namespace Szotar {
 			// if the current enumerator is valid rather than passing it around as a method 
 			// parameter and because it allows you to look at what will be enumerated next.
 			sealed class StringEnumerator : IEnumerator<char> {
-				string str;
+			    readonly string str;
 				int i;
 				bool valid;
 

@@ -15,8 +15,8 @@ namespace Szotar {
 		string revisionID = string.Empty;
 
 		public class Section : IDictionarySection {
-			List<Entry> entries;
-			SimpleDictionary dictionary;
+		    readonly List<Entry> entries;
+		    readonly SimpleDictionary dictionary;
 			int fullyLoadedEntries;
 
 			public Section(List<Entry> entries, bool translationsLoaded, SimpleDictionary dictionary) {
@@ -878,7 +878,7 @@ namespace Szotar {
 	[System.Diagnostics.DebuggerDisplay("StringPool ({Count} unique of {Calls} pooled)")]
 	public class StringPool {
 		//In lieu of a proper HashSet, this will do.
-		private Dictionary<string, string> values = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> values = new Dictionary<string, string>();
 
 		public StringPool() {
 			ShouldPool = true;

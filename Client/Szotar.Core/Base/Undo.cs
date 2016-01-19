@@ -12,9 +12,9 @@ namespace Szotar {
 		where T : ICommand
 	{
 		// The newest undo items are at the end of the list.
-		List<T> undoItems = new List<T>();
+	    readonly List<T> undoItems = new List<T>();
 		// The newest redo items are at the end of the list.
-		List<T> redoItems = new List<T>();
+	    readonly List<T> redoItems = new List<T>();
 
 		public void Undo(int count) {
 			if (count > UndoItemCount)

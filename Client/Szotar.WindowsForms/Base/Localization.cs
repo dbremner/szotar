@@ -24,7 +24,7 @@ namespace Szotar.WindowsForms {
 	}
 
 	public class TypeStringTable : StringTable {
-		string prefix;
+	    readonly string prefix;
 
 		public TypeStringTable(Type type)
 			: base("TypeDescriptions") {
@@ -39,7 +39,7 @@ namespace Szotar.WindowsForms {
 	}
 
 	public class StringTable : IStringTable {
-		ResourceManager resourceManager;
+	    readonly ResourceManager resourceManager;
 
 		public StringTable(ResourceManager resourceManager) {
 			this.resourceManager = resourceManager;

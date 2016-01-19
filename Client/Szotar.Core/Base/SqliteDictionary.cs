@@ -13,9 +13,10 @@ namespace Szotar {
 	}
 
 	public class SqliteDictionary : Sqlite.SqliteDatabase, IBilingualDictionary {
-		Section forwardsSection, reverseSection;
+	    readonly Section forwardsSection;
+	    readonly Section reverseSection;
 
-		List<DbCommand> commands;
+	    List<DbCommand> commands;
 
 		protected SqliteDictionary(string path)
 			: base(path) {
@@ -25,7 +26,7 @@ namespace Szotar {
 			InitCommands();
 		}
 
-		static Dictionary<string, NullWeakReference<SqliteDictionary>> openDicts
+		static readonly Dictionary<string, NullWeakReference<SqliteDictionary>> openDicts
 			= new Dictionary<string,NullWeakReference<SqliteDictionary>>();
 
 		public static SqliteDictionary FromPath(string path) {
@@ -280,8 +281,8 @@ namespace Szotar {
 		#endregion
 
 		class Section : IDictionarySection {
-			SqliteDictionary dict;
-			bool forwards;
+		    readonly SqliteDictionary dict;
+		    readonly bool forwards;
 
 			public Section(SqliteDictionary dict, bool forwards) {
 				this.dict = dict;
@@ -414,7 +415,7 @@ namespace Szotar {
 
 	[Obsolete]
 	class SqliteSection : Sqlite.SqliteObject, IDictionarySection {
-		int section;
+	    readonly int section;
 
 		public SqliteSection(SqliteDictionary dict, int section) : base(dict) {
 			this.section = section;

@@ -26,7 +26,7 @@ namespace Szotar {
 	public class ProgramLog {
 		public List<LogMessage> Messages { get; set; }
 		public int MaxLength { get; set; }
-		object syncObject = new object();
+	    readonly object syncObject = new object();
 
 		public static ProgramLog Default { get; set; }
 

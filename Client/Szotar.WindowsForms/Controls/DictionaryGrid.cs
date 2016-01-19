@@ -989,7 +989,7 @@ namespace Szotar.WindowsForms.Controls {
 		}
 
 		public class ColumnNameIndexer {
-			DataGridView gridView;
+		    readonly DataGridView gridView;
 			public ColumnNameIndexer(DataGridView gridView) {
 				this.gridView = gridView;
 			}

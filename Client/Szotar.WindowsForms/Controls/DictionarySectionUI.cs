@@ -10,8 +10,8 @@ using Szotar.WindowsForms.Importing;
 
 namespace Szotar.WindowsForms.Controls {
 	public partial class DictionarySectionUI : UserControl, IImporterUI<IBilingualDictionary> {
-		IDictionarySectionImporter importer;
-		DualSectionImporter dualSection;
+	    readonly IDictionarySectionImporter importer;
+	    readonly DualSectionImporter dualSection;
 
 		public DictionarySectionUI(DualSectionImporter dualSection, IDictionarySectionImporter importer) {
 			InitializeComponent();

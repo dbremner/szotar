@@ -20,8 +20,8 @@ namespace Szotar {
 
 	internal class LocalizedTypeDescriptor : CustomTypeDescriptor {
 		Type type;
-		PropertyDescriptorCollection baseProperties;
-		IStringTable typeStringTable;
+	    readonly PropertyDescriptorCollection baseProperties;
+	    readonly IStringTable typeStringTable;
 
 		public LocalizedTypeDescriptor(Type type) {
 			baseProperties = TypeDescriptor.GetProvider(typeof(Object)).GetTypeDescriptor(type).GetProperties();
@@ -52,12 +52,14 @@ namespace Szotar {
 	}
 
 	internal class LocalizedPropertyDescriptor : PropertyDescriptor {
-		PropertyDescriptor actual;
+	    readonly PropertyDescriptor actual;
 		IStringTable typeStringTable;
 
-		string category, description, displayName;
+	    readonly string category;
+	    readonly string description;
+	    readonly string displayName;
 
-		public LocalizedPropertyDescriptor(PropertyDescriptor actual, IStringTable typeStringTable)
+	    public LocalizedPropertyDescriptor(PropertyDescriptor actual, IStringTable typeStringTable)
 			: base(actual) 
 		{
 			this.actual = actual;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Szotar.Quizlet {
 	public class SyncOperation {
 		private bool begun;
-		private long[] setIDs;
+		private readonly long[] setIDs;
 
 		public SyncOperation(IEnumerable<long> setIDs) {
 			if (setIDs == null)

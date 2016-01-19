@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Szotar.WindowsForms.Forms {
 	public partial class StartPage : Form {
-		TagMenu tagMenu;
+	    readonly TagMenu tagMenu;
 
 		public StartPage() {
 			InitializeComponent();

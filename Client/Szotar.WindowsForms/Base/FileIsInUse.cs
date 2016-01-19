@@ -30,7 +30,7 @@ namespace Szotar.WindowsForms {
 
 	public class FileIsInUse : IDisposable, IFileIsInUse {
 		int? cookie;
-		IMoniker moniker;
+	    readonly IMoniker moniker;
 
 		public FileIsInUse(string path) {
 #if MONO

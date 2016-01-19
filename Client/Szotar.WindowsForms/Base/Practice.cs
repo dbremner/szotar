@@ -50,7 +50,7 @@ namespace Szotar.WindowsForms {
 		public IPracticeWindow Owner { get; private set; }
 		public Panel GameArea { get { return Owner.GameArea; } }
 
-		List<ToolStrip> mergedMenus = new List<ToolStrip>();
+	    readonly List<ToolStrip> mergedMenus = new List<ToolStrip>();
 
 		public Mode(string name) {
 			Name = name;
@@ -113,11 +113,13 @@ namespace Szotar.WindowsForms {
 	/// Stores a backwards/forwards history and navigates through it.
 	/// </summary>
 	public class Navigator {
-		Stack<PracticeItem>
-			back = new Stack<PracticeItem>(),
-			fore = new Stack<PracticeItem>();
+	    readonly Stack<PracticeItem>
+			back = new Stack<PracticeItem>();
 
-		public IPracticeWindow Source { get; private set; }
+	    readonly Stack<PracticeItem>
+	        fore = new Stack<PracticeItem>();
+
+	    public IPracticeWindow Source { get; private set; }
 		public PracticeItem CurrentItem { get; private set; }
 		public void UpdateCurrentItem(PracticeItem newItem) {
 			Source.ReplaceItem(CurrentItem, newItem);
@@ -383,8 +385,12 @@ namespace Szotar.WindowsForms {
 		public Navigator Navigator { get; protected set; }
 		public ToolStrip Menu { get; protected set; }
 
-		ToolStripButton back, fore, end, edit, swap;
-		ToolStripLabel position;
+	    readonly ToolStripButton back;
+	    readonly ToolStripButton fore;
+	    readonly ToolStripButton end;
+	    readonly ToolStripButton edit;
+	    readonly ToolStripButton swap;
+	    readonly ToolStripLabel position;
 
 		public NavigatorMenu(Navigator nav, bool swapItem) {
 			Navigator = nav;
