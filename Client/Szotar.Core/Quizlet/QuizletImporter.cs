@@ -8,8 +8,7 @@ namespace Szotar.Quizlet {
     [ImporterAttribute("Quizlet", typeof(WordList))]
     [ImporterDescription("Import a set from Quizlet", "Quizlet")]
 	public class QuizletImporter : IImporter<WordList> {
-		long? setID;
-		CancellationTokenSource cts;
+        CancellationTokenSource cts;
 		bool disposed;
 	    readonly IStringTable stringTable;
 
@@ -20,25 +19,22 @@ namespace Szotar.Quizlet {
 		}
 
 		public QuizletImporter(long? setID) {
-			this.setID = setID;
+			this.Set = setID;
 		}
 
-		public long? Set {
-			get { return setID; }
-			set { setID = value; }
-		}
+		public long? Set { get; set; }
 
-		public async Task<WordList> BeginImportAsTask() {
+        public async Task<WordList> BeginImportAsTask() {
 			if (disposed)
 				throw new ObjectDisposedException("QuizletImporter");
 
-            if (setID == null)
+            if (Set == null)
                 throw new InvalidOperationException("Cannot begin quizlet import when Set is null");
 
 		    var api = new QuizletApi();
 			OnProgressChanged(stringTable["ContactingServer"].FormatUI(api.ServiceUri.Host), null);
             
-		    var set = await api.FetchSetInfo(setID.Value, cts.Token);
+		    var set = await api.FetchSetInfo(Set.Value, cts.Token);
 		    if (set.Terms == null)
 		        throw new FormatException("JSON for set information did not contain the terms of the set");
 
@@ -49,7 +45,7 @@ namespace Szotar.Quizlet {
 			foreach (var subject in set.Subjects.Distinct(StringComparer.CurrentCultureIgnoreCase))
 				list.Tag(subject);
 
-			list.SyncID = setID;
+			list.SyncID = Set;
 			list.SyncDate = DateTime.UtcNow;
 			list.SyncNeeded = false;
 

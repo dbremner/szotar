@@ -10,9 +10,8 @@ namespace Szotar {
 		int writeBufferOffset;
 
 	    readonly Stream stream;
-		long streamPosition;
 
-		public LineWriter(Stream stream)
+	    public LineWriter(Stream stream)
 			: this(stream, 4096)
 		{ }
 
@@ -31,13 +30,9 @@ namespace Szotar {
 			encoder = Encoding.UTF8.GetEncoder();
 		}
 
-		public long Position {
-			get {
-				return streamPosition;
-			}
-		}
+		public long Position { get; private set; }
 
-		void Write(string str, bool terminateLine) {
+	    void Write(string str, bool terminateLine) {
 			char[] chars = str.ToCharArray();
 			int index = 0;
 			int totalBytes = 0;
@@ -76,7 +71,7 @@ namespace Szotar {
 					FlushBuffer();
 			}
 
-			streamPosition += totalBytes;
+			Position += totalBytes;
 
 			if (terminateLine) {
 				// Now, write the line terminator.
@@ -84,7 +79,7 @@ namespace Szotar {
 				WriteByte((byte)'\n');
 			}
 			
-			System.Diagnostics.Debug.Assert(streamPosition >= stream.Position);
+			System.Diagnostics.Debug.Assert(Position >= stream.Position);
 		}
 
 		public void Write(string str) {
@@ -100,7 +95,7 @@ namespace Szotar {
 				FlushBuffer();
 
 			writeBuffer[writeBufferOffset++] = b;
-			streamPosition++;
+			Position++;
 		}
 
 		void FlushBuffer() {

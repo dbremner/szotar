@@ -16,29 +16,23 @@ namespace Szotar {
 
 		public class Section : IDictionarySection {
 		    readonly List<Entry> entries;
-		    readonly SimpleDictionary dictionary;
-			int fullyLoadedEntries;
 
-			public Section(List<Entry> entries, bool translationsLoaded, SimpleDictionary dictionary) {
+		    public Section(List<Entry> entries, bool translationsLoaded, SimpleDictionary dictionary) {
 				this.entries = entries;
-				this.dictionary = dictionary;
+				this.Dictionary = dictionary;
 				if (translationsLoaded)
-					fullyLoadedEntries = entries.Count;
+					FullyLoadedCount = entries.Count;
 			}
 
-			public SimpleDictionary Dictionary {
-				get { return dictionary; }
-			}
+			public SimpleDictionary Dictionary { get; }
 
-			public int HeadWords {
+		    public int HeadWords {
 				get { return entries.Count; }
 			}
 
-			public int FullyLoadedCount {
-				get { return fullyLoadedEntries; }
-			}
+			public int FullyLoadedCount { get; private set; }
 
-			public IEnumerator<Entry> GetEnumerator() {
+		    public IEnumerator<Entry> GetEnumerator() {
 				return entries.GetEnumerator();
 			}
 
@@ -57,15 +51,15 @@ namespace Szotar {
 
 				System.Diagnostics.Debug.Assert(stub.Tag != null);
 
-				Entry full = dictionary.GetFullEntry(stub, this);
+				Entry full = Dictionary.GetFullEntry(stub, this);
 				stub.Translations = full.Translations;
-				fullyLoadedEntries++;
+				FullyLoadedCount++;
 			}
 
 			public void FillOutPartialEntry(Entry partial, Entry full) {
 				if (partial.Translations == null) {
 					partial.Translations = full.Translations;
-					fullyLoadedEntries++;
+					FullyLoadedCount++;
 				}
 			}
 

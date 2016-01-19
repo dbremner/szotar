@@ -247,8 +247,7 @@ namespace Szotar.WindowsForms.Controls {
 	[ToolboxBitmap(typeof(System.Windows.Forms.DataGridView))]
 	public partial class DictionaryGrid : UserControl {
 		WordList source;
-		bool showMutableRows;
-		bool allowNewRows;
+	    bool allowNewRows;
 		bool ignoreNextListChangedEvent = false;
 		float columnRatio = 0.5f;
 
@@ -977,12 +976,9 @@ namespace Szotar.WindowsForms.Controls {
 
 		#region Properties
 		[Browsable(true), Description("Gets or sets whether the grid marks mutable rows in a different colour."), Category("Display"), DefaultValue(true)]
-		public bool ShowMutableRows {
-			get { return showMutableRows; }
-			set { showMutableRows = value; }
-		}
+		public bool ShowMutableRows { get; set; }
 
-		public ColumnNameIndexer ColumnNames {
+	    public ColumnNameIndexer ColumnNames {
 			get {
 				return new ColumnNameIndexer(grid);
 			}

@@ -55,39 +55,23 @@ namespace Szotar {
 	    readonly PropertyDescriptor actual;
 		IStringTable typeStringTable;
 
-	    readonly string category;
-	    readonly string description;
-	    readonly string displayName;
-
 	    public LocalizedPropertyDescriptor(PropertyDescriptor actual, IStringTable typeStringTable)
 			: base(actual) 
 		{
 			this.actual = actual;
 			this.typeStringTable = typeStringTable;
-			category = typeStringTable[actual.Category + "$Category"] ?? actual.Category;
-			description = typeStringTable[actual.Description + "$Description"] ?? actual.Description;
-			displayName = typeStringTable[actual.DisplayName + "$Name"] ?? actual.DisplayName;
+			Category = typeStringTable[actual.Category + "$Category"] ?? actual.Category;
+			Description = typeStringTable[actual.Description + "$Description"] ?? actual.Description;
+			DisplayName = typeStringTable[actual.DisplayName + "$Name"] ?? actual.DisplayName;
 		}
 
-		public override string Category {
-			get {
-				return category;
-			}
-		}
+		public override string Category { get; }
 
-		public override string Description {
-			get {
-				return description;
-			}
-		}
+	    public override string Description { get; }
 
-		public override string DisplayName {
-			get {
-				return displayName;
-			}
-		}
+	    public override string DisplayName { get; }
 
-		public override bool CanResetValue(object component) {
+	    public override bool CanResetValue(object component) {
 			return actual.CanResetValue(component);
 		}
 

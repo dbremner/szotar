@@ -7,16 +7,15 @@ using System.Windows.Forms;
 
 namespace Szotar.WindowsForms.Forms {
 	public partial class ListBuilder : Form {
-	    readonly WordList list;
 	    readonly bool isNewList;
 
 		Control queuedUpdateControl;
 		Action queuedUpdateAction;
 	    readonly Timer queuedUpdateTimer;
 
-		public WordList WordList { get { return list; } }
+		public WordList WordList { get; }
 
-		public ListBuilder() :
+	    public ListBuilder() :
 			this(
 				DataStore.Database.CreateSet(
 					Properties.Resources.DefaultListName,
@@ -31,13 +30,13 @@ namespace Szotar.WindowsForms.Forms {
 		protected ListBuilder(WordList wordList) {
 			InitializeComponent();
 
-			list = wordList;
+			WordList = wordList;
 			grid.DataSource = wordList;
 
 			UpdateTitle();
-			name.Text = list.Name;
-			author.Text = list.Author;
-			url.Text = list.Url;
+			name.Text = WordList.Name;
+			author.Text = WordList.Author;
+			url.Text = WordList.Url;
 			UpdateEntryCount();
 
 			grid.ColumnRatio = GuiConfiguration.ListBuilderColumnRatio;
@@ -59,11 +58,11 @@ namespace Szotar.WindowsForms.Forms {
 			deleteList.Click += DeleteListClick;
 			grid.ColumnRatioChanged += GridColumnRatioChanged;
 
-			undo.Click += delegate { list.Undo(); };
-			redo.Click += delegate { list.Redo(); };
+			undo.Click += delegate { WordList.Undo(); };
+			redo.Click += delegate { WordList.Redo(); };
 			editMenu.DropDownOpening += EditMenuDropDownOpening;
 			itemContextMenu.Opening += ItemContextMenuOpening;
-			mainMenu.Items.Add(new TagMenu { WordList = list });
+			mainMenu.Items.Add(new TagMenu { WordList = WordList });
 
 			grid.ColumnHeaderMouseClick += ColumnHeaderClicked;
 
@@ -109,15 +108,15 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		private void WireListEvents() {
-			list.PropertyChanged += ListPropertyChanged;
-			list.ListDeleted += ListDeleted;
-			list.ListChanged += ListChanged;
+			WordList.PropertyChanged += ListPropertyChanged;
+			WordList.ListDeleted += ListDeleted;
+			WordList.ListChanged += ListChanged;
 		}
 
 		private void UnwireListEvents() {
-			list.PropertyChanged -= ListPropertyChanged;
-			list.ListDeleted -= ListDeleted;
-			list.ListChanged -= ListChanged;
+			WordList.PropertyChanged -= ListPropertyChanged;
+			WordList.ListDeleted -= ListDeleted;
+			WordList.ListChanged -= ListChanged;
 		}
 
 		void GridColumnRatioChanged(object sender, EventArgs e) {
@@ -133,28 +132,28 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		void MakeRecent() {
-			list.Accessed = DateTime.Now;
-			DataStore.Database.RaiseWordListOpened(list.ID);
+			WordList.Accessed = DateTime.Now;
+			DataStore.Database.RaiseWordListOpened(WordList.ID);
 		}
 
 		void RemoveItems(object sender, EventArgs e) {
-			list.RemoveAt(new List<int>(grid.SelectedEntryIndices));
+			WordList.RemoveAt(new List<int>(grid.SelectedEntryIndices));
 		}
 
 		void SwapItems(object sender, EventArgs e) {
-			list.SwapRows(new List<int>(grid.SelectedEntryIndices));
+			WordList.SwapRows(new List<int>(grid.SelectedEntryIndices));
 		}
 
 		void SwapAll(object sender, EventArgs e) {
 			var rows = new List<int>();
-			for (int i = 0; i < list.Count; ++i)
+			for (int i = 0; i < WordList.Count; ++i)
 				rows.Add(i);
 
-			list.SwapRows(rows);
+			WordList.SwapRows(rows);
 		}
 
 		void SortItems(object sender, EventArgs e) {
-			list.Sort((a, b) => string.Compare(a.Phrase, b.Phrase, StringComparison.CurrentCultureIgnoreCase));
+			WordList.Sort((a, b) => string.Compare(a.Phrase, b.Phrase, StringComparison.CurrentCultureIgnoreCase));
 		}
 
 		int? sortColumn;
@@ -171,11 +170,11 @@ namespace Szotar.WindowsForms.Forms {
 
 			switch (e.ColumnIndex) {
 			    case 0:
-			        list.Sort((a, b) => direction * string.Compare(a.Phrase, b.Phrase, StringComparison.CurrentCultureIgnoreCase));
+			        WordList.Sort((a, b) => direction * string.Compare(a.Phrase, b.Phrase, StringComparison.CurrentCultureIgnoreCase));
 			        sortColumn = 0;
 			        break;
 			    case 1:
-			        list.Sort((a, b) => direction * string.Compare(a.Translation, b.Translation, StringComparison.CurrentCultureIgnoreCase));
+			        WordList.Sort((a, b) => direction * string.Compare(a.Translation, b.Translation, StringComparison.CurrentCultureIgnoreCase));
 			        sortColumn = 1;
 			        break;
 			}
@@ -189,7 +188,7 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		private void UpdateTitle() {
-			Text = string.Format("{0} - {1}", list.Name, Application.ProductName);
+			Text = string.Format("{0} - {1}", WordList.Name, Application.ProductName);
 		}
 
 		bool CanCut() {
@@ -205,8 +204,8 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		void EditMenuDropDownOpening(object sender, EventArgs e) {
-			string undoDesc = list.UndoDescription;
-			string redoDesc = list.RedoDescription;
+			string undoDesc = WordList.UndoDescription;
+			string redoDesc = WordList.RedoDescription;
 
 			if (undoDesc == null) {
 				undo.Enabled = false;
@@ -267,36 +266,36 @@ namespace Szotar.WindowsForms.Forms {
 		// It would be better if the database update were delayed until no keys have been
 		// pressed for, say, 200 milliseconds.
 		void UrlTextChanged(object sender, EventArgs e) {
-			list.Url = url.Text;
+			WordList.Url = url.Text;
 		}
 
 		void AuthorTextChanged(object sender, EventArgs e) {
-			list.Author = author.Text;
+			WordList.Author = author.Text;
 		}
 
 		void NameTextChanged(object sender, EventArgs e) {
-			list.Name = name.Text;
+			WordList.Name = name.Text;
 			MakeRecent();
 		}
 
 		void UpdateEntryCount() {
-			entriesLabel.Text = string.Format(Properties.Resources.NEntries, list.Count);
+			entriesLabel.Text = string.Format(Properties.Resources.NEntries, WordList.Count);
 		}
 
 		void ListPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case "Name":
-					if (!name.Text.Equals(list.Name))
-						name.Text = list.Name;
+					if (!name.Text.Equals(WordList.Name))
+						name.Text = WordList.Name;
 					UpdateTitle();
 					break;
 				case "Author":
-					if (!author.Text.Equals(list.Author))
-						author.Text = list.Author;
+					if (!author.Text.Equals(WordList.Author))
+						author.Text = WordList.Author;
 					break;
 				case "Url":
-					if (!url.Text.Equals(list.Url))
-						url.Text = list.Url;
+					if (!url.Text.Equals(WordList.Url))
+						url.Text = WordList.Url;
 					break;
 			}
 		}
@@ -326,7 +325,7 @@ namespace Szotar.WindowsForms.Forms {
 		private void ListBuilderClosing(object sender, CancelEventArgs e) {
 			UnwireListEvents();
 
-		    if (!isNewList || list.Count != 0)
+		    if (!isNewList || WordList.Count != 0)
 		        return;
 		    
             var dr = MessageBox.Show(
@@ -339,7 +338,7 @@ namespace Szotar.WindowsForms.Forms {
 		    if (dr == DialogResult.Cancel) {
 		        e.Cancel = true;
 		    } else if (dr == DialogResult.No) {
-		        list.DeleteWordList();
+		        WordList.DeleteWordList();
 		    }
 		}
 
@@ -354,7 +353,7 @@ namespace Szotar.WindowsForms.Forms {
 		private void CopyAsCsvClick(object sender, EventArgs e) {
 			var sb = new StringBuilder();
 
-			foreach (WordListEntry pair in list) {
+			foreach (WordListEntry pair in WordList) {
 				var phrase = pair.Phrase;
 				var translation = pair.Translation;
 
@@ -404,8 +403,8 @@ namespace Szotar.WindowsForms.Forms {
 		public void AddPair(string phrase, string translation) {
 			System.Diagnostics.Debug.Assert(!InvokeRequired);
 
-			list.Add(new WordListEntry(list, phrase, translation));
-			grid.DataSource = list;
+			WordList.Add(new WordListEntry(WordList, phrase, translation));
+			grid.DataSource = WordList;
 		}
 
 		public void AddEntries(IEnumerable<TranslationPair> entries) {
@@ -413,11 +412,11 @@ namespace Szotar.WindowsForms.Forms {
 
 			var realEntries = new List<WordListEntry>();
 			foreach (var entry in entries)
-				realEntries.Add(new WordListEntry(list, entry.Phrase, entry.Translation));
+				realEntries.Add(new WordListEntry(WordList, entry.Phrase, entry.Translation));
 
-			list.Insert(list.Count, realEntries);
+			WordList.Insert(WordList.Count, realEntries);
 
-			grid.DataSource = list;
+			grid.DataSource = WordList;
 		}
 
 		public bool ShowMetadata {
@@ -439,14 +438,14 @@ namespace Szotar.WindowsForms.Forms {
 		public void ScrollToResult(ListSearchResult result) {
 			if (result.PositionHint.HasValue) {
 				var hint = result.PositionHint.Value;
-				if (hint >= 0 && hint < list.Count && list[hint].Phrase == result.Phrase && list[hint].Translation == result.Translation) {
+				if (hint >= 0 && hint < WordList.Count && WordList[hint].Phrase == result.Phrase && WordList[hint].Translation == result.Translation) {
 					ScrollToPosition(hint);
 					return;
 				}
 			}
 
-			for (int i = 0; i < list.Count; i++) {
-				var item = list[i];
+			for (int i = 0; i < WordList.Count; i++) {
+				var item = WordList[i];
 				if (item.Phrase == result.Phrase && item.Translation == result.Translation) {
 					ScrollToPosition(i);
 					return;
@@ -464,8 +463,8 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		public bool ScrollToItem(string phrase, string translation) {
-			for (int i = 0; i < list.Count; i++) {
-				if (list[i].Phrase == phrase && list[i].Translation == translation) {
+			for (int i = 0; i < WordList.Count; i++) {
+				if (WordList[i].Phrase == phrase && WordList[i].Translation == translation) {
 					ScrollToPosition(i);
 					return true;
 				}
@@ -486,7 +485,7 @@ namespace Szotar.WindowsForms.Forms {
 				MessageBoxDefaultButton.Button1);
 
 			if (dr == DialogResult.OK) {
-				list.DeleteWordList();
+				WordList.DeleteWordList();
 
 				// The form will close automatically, because deleting the list will 
 				// fire the list's ListDeleted event, which this form subscribes to.
@@ -502,10 +501,10 @@ namespace Szotar.WindowsForms.Forms {
 		void Paste(IEnumerable<List<string>> lines, int? row) {
 			var entries = (from line in lines
 			               where line.Count >= 2
-			               select new WordListEntry(list, line[0], line[1])).ToList();
+			               select new WordListEntry(WordList, line[0], line[1])).ToList();
 
 		    if (entries.Count > 0) {
-				list.Insert(row ?? list.Count, entries);
+				WordList.Insert(row ?? WordList.Count, entries);
 				grid.Refresh(); // XXX Is this necessary?
 			}
 		}
@@ -531,12 +530,12 @@ namespace Szotar.WindowsForms.Forms {
 		}
 
 		private void Practice(PracticeMode mode) {
-			if (!list.ID.HasValue) {
-				ProgramLog.Default.AddMessage(LogType.Error, "WordList {0} has no ID", list.Name);
+			if (!WordList.ID.HasValue) {
+				ProgramLog.Default.AddMessage(LogType.Error, "WordList {0} has no ID", WordList.Name);
 				return;
 			}
 
-			PracticeWindow.OpenNewSession(mode, new[] { new ListSearchResult(list.ID.Value) });
+			PracticeWindow.OpenNewSession(mode, new[] { new ListSearchResult(WordList.ID.Value) });
 		}
 
 		private void FlashcardsClick(object sender, EventArgs e) {

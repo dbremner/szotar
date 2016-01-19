@@ -10,10 +10,8 @@ namespace Szotar {
 	/// </summary>
 	public class Utf8LineReader : IDisposable {
 	    readonly bool disposeStream;
-	    readonly Stream stream;
 	    readonly Encoding encoding;
-		bool eof;
-		long position;
+	    long position;
 
 		// The default buffer size is quite big, I believe. It's probably best to keep 
 		// it around between ReadLine calls to avoid big allocations every time.
@@ -32,7 +30,7 @@ namespace Szotar {
 		// against other people already having the file open with e.g. FileAccess.Write and FileShare.Read.
 		Utf8LineReader(string path, bool skipBOM, FileAccess access, FileShare share) {
 			disposeStream = true;
-			stream = new FileStream(path, FileMode.Open, access, share);
+			BaseStream = new FileStream(path, FileMode.Open, access, share);
 
 			encoding = Encoding.UTF8;
 			decoder = encoding.GetDecoder();
@@ -54,7 +52,7 @@ namespace Szotar {
 		public Utf8LineReader(string path, long bytePosition, FileAccess access, FileShare share)
 			: this(path, false, access, share) 
 		{
-			stream.Seek(bytePosition, SeekOrigin.Begin);
+			BaseStream.Seek(bytePosition, SeekOrigin.Begin);
 			position = bytePosition;
 			offset = 0;
 			bytesInBuffer = 0;
@@ -82,17 +80,11 @@ namespace Szotar {
 
 		int BufferSize { get { return 1024; } }
 
-		public bool EndOfStream {
-			get {
-				return eof;
-			}
-		}
+		public bool EndOfStream { get; private set; }
 
-		public Stream BaseStream {
-			get { return stream; }
-		}
+	    public Stream BaseStream { get; }
 
-		// Skip the UTF-8 byte order mark, EF BB BF.
+	    // Skip the UTF-8 byte order mark, EF BB BF.
 		// It doesn't actually identify the byte order, since UTF-8 doesn't have byte order issues,
 		// but it does identify that it's UTF-8. That's pretty useless to us, considering we already know that.
 		void SkipBOM() {
@@ -113,10 +105,10 @@ namespace Szotar {
 				checked { offset += (int)(bytePosition - position); }
 				System.Diagnostics.Debug.Assert(offset >= 0 && offset < bytesInBuffer);
 			} else {
-				stream.Seek(bytePosition, SeekOrigin.Begin);
+				BaseStream.Seek(bytePosition, SeekOrigin.Begin);
 				offset = 0;
 				bytesInBuffer = 0;
-				eof = false;
+				EndOfStream = false;
 			}
 
 			Line = -1; // There's no efficient way to tell. 
@@ -124,7 +116,7 @@ namespace Szotar {
 
 			// SkipBOM expects no buffer to exist yet.
 			if (position == 0) {
-				stream.Seek(0, SeekOrigin.Begin);
+				BaseStream.Seek(0, SeekOrigin.Begin);
 				offset = 0;
 				bytesInBuffer = 0;
 
@@ -194,7 +186,7 @@ namespace Szotar {
 					break;
 			}
 
-			if (!eof) {
+			if (!EndOfStream) {
 				// Make sure that the EOF flag is properly set.
 				// This allows us to assume this in the next read, and to assume that offset != bytesInBuffer,
 				// which is useful because it stops Decoder.Convert from throwing a wobbler.
@@ -212,10 +204,10 @@ namespace Szotar {
 
 		bool BufferNextPart() {
 			offset = 0;
-			bytesInBuffer = stream.Read(buffer, 0, buffer.Length);
+			bytesInBuffer = BaseStream.Read(buffer, 0, buffer.Length);
 
 			if (bytesInBuffer == 0) {
-				eof = true;
+				EndOfStream = true;
 				return false;
 			}
 

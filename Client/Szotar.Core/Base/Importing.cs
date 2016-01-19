@@ -16,61 +16,46 @@ namespace Szotar {
 	public sealed class ImporterAttribute : Attribute {
 		// See the attribute guidelines at 
 		//  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconusingattributeclasses.asp
-		readonly string name;
-		readonly Type type;
 
-		public ImporterAttribute(string name, Type type) {
-			this.name = name;
-			this.type = type;
+	    public ImporterAttribute(string name, Type type) {
+			this.Name = name;
+			this.Type = type;
 		}
 
-		public string Name {
-			get { return name; }
-		}
+		public string Name { get; }
 
-		public Type Type {
-			get { return type; }
-		}
+	    public Type Type { get; }
 	}
 
 	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 	public sealed class ImporterUIAttribute : Attribute {
 		// See the attribute guidelines at 
 		//  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconusingattributeclasses.asp
-		readonly Type importerType;
 
-		public ImporterUIAttribute(Type importerType) {
-			this.importerType = importerType;
+	    public ImporterUIAttribute(Type importerType) {
+			this.ImporterType = importerType;
 		}
 
-		public Type ImporterType {
-			get { return importerType; }
-		}
+		public Type ImporterType { get; }
 	}
 
 	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 	public sealed class ImporterDescriptionAttribute : Attribute {
 		// See the attribute guidelines at 
 		//  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconusingattributeclasses.asp
-		readonly string description;
-		readonly string resourceIdentifier;
 
-		public ImporterDescriptionAttribute(string description) {
-			this.description = description;
+	    public ImporterDescriptionAttribute(string description) {
+			this.Description = description;
 		}
 
 		public ImporterDescriptionAttribute(string description, string resourceIdentifier) {
-			this.description = description;
-			this.resourceIdentifier = resourceIdentifier;
+			this.Description = description;
+			this.ResourceIdentifier = resourceIdentifier;
 		}
 
-		public string Description {
-			get { return description; }
-		}
+		public string Description { get; }
 
-		public string ResourceIdentifier {
-			get { return resourceIdentifier; }
-		}
+	    public string ResourceIdentifier { get; }
 	}
 	#endregion
 
@@ -79,21 +64,14 @@ namespace Szotar {
 	}
 
 	public class ProgressMessageEventArgs : EventArgs {
-		readonly string message;
-		readonly int? percentage;
-
-		public ProgressMessageEventArgs(string message, int? percentage) {
-			this.message = message;
-			this.percentage = percentage;
+	    public ProgressMessageEventArgs(string message, int? percentage) {
+			this.Message = message;
+			this.Percentage = percentage;
 		}
 
-		public string Message {
-			get { return message; }
-		}
+		public string Message { get; }
 
-		public int? Percentage {
-			get { return percentage; }
-		}
+	    public int? Percentage { get; }
 	}
 
 	public class ImportCompletedEventArgs<T> : AsyncCompletedEventArgs {

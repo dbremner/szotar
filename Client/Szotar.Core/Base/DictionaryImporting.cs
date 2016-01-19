@@ -491,19 +491,18 @@ namespace Szotar {
 			sealed class StringEnumerator : IEnumerator<char> {
 			    readonly string str;
 				int i;
-				bool valid;
 
-				public StringEnumerator(string str) {
+			    public StringEnumerator(string str) {
 					this.str = str;
 					Reset();
 				}
 
-				public bool Valid { get { return valid; } }
+				public bool Valid { get; private set; }
 
-				/// <summary>A look at what will be enumerated next, (for debugging purposes).</summary>
+			    /// <summary>A look at what will be enumerated next, (for debugging purposes).</summary>
 				public string LookAhead {
 					get {
-						if (!valid)
+						if (!Valid)
 							return null;
 						return str.Substring(i, 15);
 					}
@@ -511,7 +510,7 @@ namespace Szotar {
 
 				public char Current {
 					get {
-						if (!valid)
+						if (!Valid)
 							throw new InvalidOperationException("The enumeration has finished or hasn't started.");
 						return str[i];
 					}
@@ -523,7 +522,7 @@ namespace Szotar {
 
 				object System.Collections.IEnumerator.Current {
 					get {
-						if (!valid)
+						if (!Valid)
 							throw new InvalidOperationException("The enumeration has finished or hasn't started.");
 						return str[i];
 					}
@@ -531,12 +530,12 @@ namespace Szotar {
 
 				public bool MoveNext() {
 					i++;
-					return valid = i < str.Length;
+					return Valid = i < str.Length;
 				}
 
 				public void Reset() {
 					i = -1;
-					valid = false;
+					Valid = false;
 				}
 			}
 

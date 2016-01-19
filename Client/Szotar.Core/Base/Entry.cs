@@ -15,13 +15,12 @@ namespace Szotar {
 		, ISerializable
 	{
 		string phrase, translation;
-		string phraseNA;
 
-		public string Phrase {
+	    public string Phrase {
 			get { return phrase; }
 			set {
 				phrase = value;
-				phraseNA = Searcher.RemoveAccents(phrase);
+				PhraseNoAccents = Searcher.RemoveAccents(phrase);
 				OnPropertyChanged("Phrase");
 				OnPropertyChanged("PhraseNoAccents");
 			}
@@ -38,14 +37,12 @@ namespace Szotar {
 		/// <summary>The phrase without any accents. This is used for speeding up the search.</summary>
 		/// <remarks>Note that The translation without accents is not yet needed.</remarks>
 		[Browsable(false)]
-		public string PhraseNoAccents {
-			get { return phraseNA; }
-		}
+		public string PhraseNoAccents { get; private set; }
 
-		public TranslationPair(string phrase, string translation) {
+	    public TranslationPair(string phrase, string translation) {
 			this.phrase = phrase;
 			this.translation = translation;
-			phraseNA = Searcher.RemoveAccents(phrase);
+			PhraseNoAccents = Searcher.RemoveAccents(phrase);
 		}
 
 		/// <summary>A default constructor for the purposes of data binding lists and such.
@@ -53,7 +50,7 @@ namespace Szotar {
 		public TranslationPair() {
 			phrase = string.Empty;
 			translation = string.Empty;
-			phraseNA = string.Empty;
+			PhraseNoAccents = string.Empty;
 		}
 
 		public override string ToString() {
