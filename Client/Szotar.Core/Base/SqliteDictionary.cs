@@ -407,7 +407,7 @@ namespace Szotar {
 		protected override void IncrementalUpgradeSchema(int toVersion) {
 			switch (toVersion) {
 				case 1: InitDatabase(); break;
-				default: throw new ArgumentOutOfRangeException("toVersion");
+				default: throw new ArgumentOutOfRangeException(nameof(toVersion));
 			}
 		}
 	}

@@ -33,7 +33,7 @@ namespace Szotar.Quizlet {
         {
             
             if (endPoint == null)
-                throw new ArgumentNullException("endPoint");
+                throw new ArgumentNullException(nameof(endPoint));
             
             var wc = new WebClient();
             if (needsToken && !Credentials.HasValue)

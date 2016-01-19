@@ -13,7 +13,7 @@ namespace Szotar.Quizlet {
 
 		public SyncOperation(IEnumerable<long> setIDs) {
 			if (setIDs == null)
-				throw new ArgumentNullException("setIDs");
+				throw new ArgumentNullException(nameof(setIDs));
 
 			this.setIDs = setIDs.ToArray();
 		}

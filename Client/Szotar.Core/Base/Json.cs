@@ -664,7 +664,7 @@ namespace Szotar {
 
         public JsonDictionary(IDictionary<string, JsonValue> items) {
             if (items == null)
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
 
             Items = new Dictionary<string, JsonValue>(items);
         }

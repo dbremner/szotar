@@ -222,7 +222,7 @@ namespace Szotar {
 
         public JsonConfiguration(string path) {
             if (path == null)
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             
             SettingChangedEventManager = new SettingChangedWeakEventManager(this);
             context = new JsonContext();

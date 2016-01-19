@@ -429,7 +429,7 @@ namespace Szotar {
 				// Check that the entry in the file vaguely matches the data we have.
 				string filePhrase = Uri.UnescapeDataString(reader.ReadLine().Substring(2)).Normalize();
 				if (filePhrase != entryStub.Phrase)
-					throw new ArgumentException("The phrase found in the file differed from the entry's phrase.", "entryStub");
+					throw new ArgumentException("The phrase found in the file differed from the entry's phrase.", nameof(entryStub));
 
 				var translations = new List<Translation>();
 

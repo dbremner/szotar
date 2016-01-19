@@ -44,7 +44,7 @@ namespace Szotar.Quizlet {
 				case SetEditPermissions.OnlyMe: return "only_me"; 
 				case SetEditPermissions.Groups: return "groups";
 				case SetEditPermissions.Password: return "password";
-				default: throw new ArgumentOutOfRangeException("permissions");
+				default: throw new ArgumentOutOfRangeException(nameof(permissions));
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace Szotar.Quizlet {
 				case SetVisibility.OnlyMe: return "only_me";
 				case SetVisibility.Groups: return "groups";
 				case SetVisibility.Password: return "password";
-				default: throw new ArgumentOutOfRangeException("visibility");
+				default: throw new ArgumentOutOfRangeException(nameof(visibility));
 			}
 		}
 	}

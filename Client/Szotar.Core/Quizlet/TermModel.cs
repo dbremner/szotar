@@ -15,9 +15,9 @@ namespace Szotar.Quizlet {
 
         public TermModel(JsonValue json, IJsonContext context) {
             if (json == null)
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException(nameof(json));
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             var dict = JsonDictionary.FromValue(json);
             TermID = context.FromJson<long>(dict["id"]);

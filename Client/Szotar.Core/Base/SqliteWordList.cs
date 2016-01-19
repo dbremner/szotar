@@ -209,13 +209,13 @@ namespace Szotar.Sqlite {
 
 		public override void Insert(int index, WordListEntry item) {
 			if (index > Count || index < 0)
-				throw new ArgumentOutOfRangeException("index");
+				throw new ArgumentOutOfRangeException(nameof(index));
 			Do(new Insertion(this, index, item));
 		}
 
 		public override void Insert(int index, IList<WordListEntry> items) {
 			if (index > Count || index < 0)
-				throw new ArgumentOutOfRangeException("index");
+				throw new ArgumentOutOfRangeException(nameof(index));
 			Do(new MultipleInsertion(this, index, items));
 		}
 
@@ -227,7 +227,7 @@ namespace Szotar.Sqlite {
 
 		public override void RemoveAt(int index) {
 			if (index >= Count || index < 0)
-				throw new ArgumentOutOfRangeException("index");
+				throw new ArgumentOutOfRangeException(nameof(index));
 			Do(new Deletion(this, index));
 		}
 
@@ -393,7 +393,7 @@ namespace Szotar.Sqlite {
 				if (item == null)
 					throw new ArgumentNullException();
 				if (index < 0 || index > list.Count)
-					throw new ArgumentOutOfRangeException("index");
+					throw new ArgumentOutOfRangeException(nameof(index));
 
 				using (var txn = Connection.BeginTransaction()) {
 					insertCommandSetID.Value = list.ID;
@@ -412,7 +412,7 @@ namespace Szotar.Sqlite {
 			/// </summary>
 			public void Insert(int index, IList<WordListEntry> entries) {
 				if (index < 0)
-					throw new ArgumentOutOfRangeException("index");
+					throw new ArgumentOutOfRangeException(nameof(index));
 				if (entries.Count == 0)
 					return;
 
@@ -1001,7 +1001,7 @@ namespace Szotar.Sqlite {
 				: base(owner)
 			{
 				if (comparison == null)
-					throw new ArgumentNullException("comparison");
+					throw new ArgumentNullException(nameof(comparison));
 
 				this.comparison = comparison;
 			}
