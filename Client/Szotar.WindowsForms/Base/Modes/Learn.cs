@@ -113,10 +113,13 @@ namespace Szotar.WindowsForms {
 	class RoundOverview : UserControl {
 		readonly TableLayoutPanel table;
 		readonly Label roundNo = new Label();
-		readonly Label correctLabel = new Label(), incorrectLabel = new Label();
-		readonly Label correctCount = new Label(), incorrectCount = new Label();
-		readonly Label correctRatio = new Label(), incorrectRatio = new Label();
-		readonly Label prompt = new Label();
+		readonly Label correctLabel = new Label();
+	    readonly Label incorrectLabel = new Label();
+	    readonly Label correctCount = new Label();
+	    readonly Label incorrectCount = new Label();
+	    readonly Label correctRatio = new Label();
+	    readonly Label incorrectRatio = new Label();
+	    readonly Label prompt = new Label();
 
 		public RoundOverview() : this(0, 0, 0) { }
 

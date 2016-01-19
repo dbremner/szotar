@@ -314,11 +314,19 @@ namespace Szotar.Sqlite {
 			readonly SqliteWordList list;
 
 			//These are called particularly often, any performance enhancements are useful.
-			readonly DbCommand insertCommand, deleteCommand, existsCommand;
-			readonly DbParameter insertCommandSetID, insertCommandListPosition, insertCommandPhrase,
-				insertCommandTranslation, deleteCommandSetID, deleteCommandListPosition, existsCommandID;
+			readonly DbCommand insertCommand;
+		    readonly DbCommand deleteCommand;
+		    readonly DbCommand existsCommand;
 
-			public Worker(SqliteObject store, SqliteWordList list)
+		    readonly DbParameter insertCommandSetID;
+		    readonly DbParameter insertCommandListPosition;
+		    readonly DbParameter insertCommandPhrase;
+		    readonly DbParameter insertCommandTranslation;
+		    readonly DbParameter deleteCommandSetID;
+		    readonly DbParameter deleteCommandListPosition;
+		    readonly DbParameter existsCommandID;
+
+		    public Worker(SqliteObject store, SqliteWordList list)
 				: base(store) {
 				this.list = list;
 

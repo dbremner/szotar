@@ -33,7 +33,8 @@ namespace Szotar.WindowsForms.Forms {
 
 			var boldFont = new Font(base.Font, FontStyle.Bold);
 			components.Add(new DisposableComponent(boldFont));
-			leftListName.Font = rightListName.Font = boldFont;
+		    leftListName.Font = boldFont;
+            rightListName.Font = boldFont;
 		}
 
 		void TermEditorItemDeleted(object sender, EventArgs e) {
