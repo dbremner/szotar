@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace Szotar.WindowsForms {
 	public static class GuiConfiguration {
 		static IConfiguration Default {
